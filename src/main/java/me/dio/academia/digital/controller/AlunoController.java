@@ -5,6 +5,7 @@ import me.dio.academia.digital.entity.form.AlunoForm;
 
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,13 @@ public class AlunoController {
 		return alunoService.getAll();
 	}
 
+	@GetMapping("/{id}")
+	public Aluno getById(@PathVariable Long id) {
+		return alunoService.get(id);
+	}
+
 	@PostMapping
-	public Aluno create(@RequestBody AlunoForm form) {
+	public Aluno create(@Valid @RequestBody AlunoForm form) {
 		return alunoService.create(form);
 	}
 	

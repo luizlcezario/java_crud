@@ -3,6 +3,7 @@ package me.dio.academia.digital.entity.form;
 import java.time.LocalDate;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
@@ -28,7 +29,7 @@ public class AlunoForm {
   @NotBlank(message = "Bairro não pode ser vazio")
   private String bairro;
 
-  @NotBlank(message = "Data de nascimento não pode ser vazia")
+  @NotNull(message = "Data de nascimento não pode ser vazia")
   @Past(message = "Data invalida")
   private LocalDate dataDeNascimento;
 }
