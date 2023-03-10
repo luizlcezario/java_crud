@@ -18,7 +18,7 @@ import me.dio.academia.digital.repository.AvaliacaoFisicaRepository;
 import me.dio.academia.digital.service.IAvaliacaoFisicaService;
 
 @Service
-public class AvaliacaoFisicaService implements IAvaliacaoFisicaService{
+public class AvaliacaoFisicaService implements IAvaliacaoFisicaService {
 
 	@Autowired
 	AvaliacaoFisicaRepository avaliacaoFisicaRepository;
@@ -30,7 +30,7 @@ public class AvaliacaoFisicaService implements IAvaliacaoFisicaService{
 		AvaliacaoFisica avaliacaoFisica = new AvaliacaoFisica();
 		Optional<Aluno> aluno = alunoRepository.findById(form.getAlunoId());
 		if (aluno.isPresent() == false)
-			throw new CustomException("Aluno não encontrado", HttpStatus.NOT_FOUND );
+			throw new CustomException("Aluno não encontrado", HttpStatus.NOT_FOUND);
 		avaliacaoFisica.setAluno(aluno.get());
 		avaliacaoFisica.setAltura(form.getAltura());
 		avaliacaoFisica.setPeso(form.getPeso());
@@ -39,26 +39,41 @@ public class AvaliacaoFisicaService implements IAvaliacaoFisicaService{
 
 	@Override
 	public void delete(Long id) {
-		// TODO Auto-generated method stub
-		
+		Optional<AvaliacaoFisica> ava = avaliacaoFisicaRepository.findById(id);
+		if (ava.isPresent() == false)
+			throw new CustomException("Aluno não encontrado", HttpStatus.NOT_FOUND);
+		avaliacaoFisicaRepository.delete(ava.get());
 	}
 
 	@Override
 	public AvaliacaoFisica get(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<AvaliacaoFisica> ava = avaliacaoFisicaRepository.findById(id);
+		if (ava.isPresent() == false)
+			throw new CustomException("Aluno não encontrado", HttpStatus.NOT_FOUND);
+		return ava.get();
 	}
 
 	@Override
-	public List<AvaliacaoFisica> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<AvaliacaoFisica> getAll(String peso, String altura) {
+		double numPeso = Double.parseDouble(peso);
+		double numAltura = Double.parseDouble(altura);
+
+		if (peso != null && altura != null)
+			return avaliacaoFisicaRepository.findByPesoAndAltura(numPeso, numAltura);
+		else if (peso != null)
+			return avaliacaoFisicaRepository.findByPeso(numPeso);
+		else if (altura != null)
+			return avaliacaoFisicaRepository.findByAltura(numAltura);
+		else
+		return avaliacaoFisicaRepository.findAll();
 	}
 
 	@Override
 	public AvaliacaoFisica update(Long id, AvaliacaoFisicaUpdateForm formUpdate) {
-		// TODO Auto-generated method stub
+		AvaliacaoFisica ava = this.get(id);
+		formUpdate.getAltura().ifPresent(ava::setAltura);
+		formUpdate.getPeso().ifPresent(ava::setPeso);
 		return null;
 	}
-	
+
 }

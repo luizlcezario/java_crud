@@ -1,4 +1,12 @@
 package me.dio.academia.digital.repository;
 
-public interface MatriculaRepository {
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import antlr.collections.List;
+import me.dio.academia.digital.entity.Matricula;
+
+public interface MatriculaRepository extends JpaRepository<Matricula, Long> {
+	Optional<Matricula> findByAlunoId(Long id);
 }

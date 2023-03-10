@@ -1,4 +1,5 @@
 package me.dio.academia.digital.controller;
+
 import me.dio.academia.digital.entity.Aluno;
 import me.dio.academia.digital.entity.AvaliacaoFisica;
 import me.dio.academia.digital.entity.form.AlunoForm;
@@ -26,8 +27,9 @@ public class AlunoController {
 	private AlunoService alunoService;
 
 	@GetMapping
-	public List<Aluno> getAll() {
-		return alunoService.getAll();
+	public List<Aluno> getAll(@RequestParam(value = "dataDeNascimento", required = false) String dataDeNascimento,
+			@RequestParam(value = "bairro", required = false) String bairro) {
+		return alunoService.getAll(dataDeNascimento, bairro);
 	}
 
 	@GetMapping("/{id}")
@@ -39,7 +41,7 @@ public class AlunoController {
 	public Aluno create(@Valid @RequestBody AlunoForm form) {
 		return alunoService.create(form);
 	}
-	
+
 	@GetMapping("/avaliacoes/{id}")
 	public List<AvaliacaoFisica> getAllAvaliacoesFisicas(@PathVariable Long id) {
 		return alunoService.getAllAvaliacoesFisicas(id);

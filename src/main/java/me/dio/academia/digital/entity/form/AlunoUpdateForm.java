@@ -1,6 +1,8 @@
 package me.dio.academia.digital.entity.form;
 
 import java.time.LocalDate;
+import java.util.Optional;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,9 +13,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AlunoUpdateForm {
 
-  private String nome;
+  private Optional<String> nome;
 
-  private String bairro;
+  private Optional<String> bairro;
 
-  private LocalDate dataDeNascimento;
+  private Optional<LocalDate> dataDeNascimento;
 }
